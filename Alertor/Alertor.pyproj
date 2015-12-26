@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>ecd3ccd0-4d3b-4234-9f1b-b56ff9ca9a9d</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>Alertor.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>Alertor</Name>
+    <RootNamespace>Alertor</RootNamespace>
+    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
+    <InterpreterVersion>3.4</InterpreterVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AlertDialog\CategoriesWidget.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AlertsParameters\StandardLocationsList.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Alerts\Alert.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Alerts\AlertsController.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Alerts\AlertsDiskIO.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Alerts\AlertsListModel.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Alerts\AlertsListWidget.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AlertsResultsWidget.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CacheDiskIO.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AlertsParameters\Categories\CategoryTreeItem.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Alertor.py" />
+    <Compile Include="Alerts\AlertWidget.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AlertsParameters\Categories\EbayCategoriesList.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AlertsParameters\Categories\Category.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Executors\EbayShippingFeesExecutor.py" />
+    <Compile Include="Executors\EbayFindItemsExecutor.py" />
+    <Compile Include="Executors\Executor.py" />
+    <Compile Include="Executors\ExecutorsPool.py" />
+    <Compile Include="Executors\ImageDownloadExecutor.py" />
+    <Compile Include="MainWindow.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AlertDialog\NewEbayAlertDialog.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Results\Result.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Results\ResultsController.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Results\ResultsListModel.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Results\ResultsListWidget.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Results\ResultsDiskIO.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Results\ResultWidget.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TreeModel.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Executors\" />
+    <Folder Include="Alerts\" />
+    <Folder Include="AlertsParameters\Categories\" />
+    <Folder Include="AlertsParameters\" />
+    <Folder Include="AlertDialog\" />
+    <Folder Include="Results\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
+  <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

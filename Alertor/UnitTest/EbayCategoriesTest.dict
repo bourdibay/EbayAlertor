@@ -1,0 +1,5 @@
+{'CategoryName': 'First', 'CategoryParentID': '-1', 'CategoryIDPath': '11', 'CategoryLevel': '1', 'CategoryNamePath': 'First', 'LeafCategory': 'false', 'CategoryID': '11'}
+{'CategoryName': 'First1', 'CategoryParentID': '11', 'CategoryIDPath': '11:111', 'CategoryLevel': '2', 'CategoryNamePath': 'First:First1', 'LeafCategory': 'false', 'CategoryID': '111'}
+{'CategoryName': 'First1_1', 'CategoryParentID': '111', 'CategoryIDPath': '11:111:1111', 'CategoryLevel': '3', 'CategoryNamePath': 'First:First1:First1_1', 'LeafCategory': 'true', 'CategoryID': '1111'}
+{'CategoryName': 'First2', 'CategoryParentID': '11', 'CategoryIDPath': '11:112', 'CategoryLevel': '2', 'CategoryNamePath': 'First:First2', 'LeafCategory': 'true', 'CategoryID': '112'}
+{'CategoryName': 'Second', 'CategoryParentID': '-1', 'CategoryIDPath': '22', 'CategoryLevel': '1', 'CategoryNamePath': 'Second', 'LeafCategory': 'false', 'CategoryID': '22'}
