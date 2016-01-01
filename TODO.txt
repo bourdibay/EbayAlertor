@@ -1,0 +1,8 @@
+
+- May crash when clicking on an alert whereas we did not finished the execution of the request first.
+Should either push the click into a queue, or block the click until the request is finished.
+
+- Compare second most recent result in Result/[date] and Result/[current_date], and add differences summary into AlertWidget.
+
+- The TreeModel does not always update children/parent checkstates (see in alerts creation's dialog).
+See TreeModel.py, function setData() of TreeeModel.
