@@ -56,8 +56,19 @@ class AlertsController(QObject):
         # TODO: check if new results
         # TODO: change new field of Alert and emit signal for widget
         print("Execution finished for {}".format(executor.alert.keywords))
-#        results = AlertsDiskIO().getResultsFromDisk(executor.alert)
+        previousResultFilepath = ResultsDiskIO().getPreviousResultFilepath()
+        print("Gonna compare current results with {}".format(previousResultFilepath))
+        if previousResultFilepath:
+            currentResultFilepath = ResultsDiskIO().cacheDirectory
+            self.compareResults(previousResultFilepath, currentResultFilepath, executor.alert.uid)
+            #Todo: get result and emit signal to change the widget
 
     def alertClicked(self, alertWidget, alert):
         print("[AlertsController] alertClicked()")
         self.alertRequested.emit(alert)
+
+    def compareResults(self, previousResultFilepath, currentResultFilepath, alertUID):
+        print("[AlertsController] compareResults()")        
+        previousResults = ResultsDiskIO().getResultsFromDisk(previousResultFilepath, alertUID)
+        currentResults = ResultsDiskIO().getCurrentResultsFromDisk(alertUID)
+        # Todo: Compare

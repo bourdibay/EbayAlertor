@@ -30,7 +30,7 @@ class AlertsResultsWidget(QWidget):
 
     def alertRequested(self, alert):
         print("[AlertsResultsController] alertRequested()")
-        results = ResultsDiskIO().getResultsFromDisk(alert)
+        results = ResultsDiskIO().getCurrentResultsFromDisk(alert.uid)
         self.resultsController.loadResults(results)
 
     def appendNewAlert(self, alert):
