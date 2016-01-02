@@ -13,7 +13,6 @@ class MainWindow(QMainWindow):
     def __init__(self, title):
         super().__init__()
 
-        self.move(300, 300) # TODO: move central window
         self.resize(1280, 800)
         self.setWindowTitle(title)
         self.mainLayout = QVBoxLayout()
