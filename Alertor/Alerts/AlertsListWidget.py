@@ -12,6 +12,8 @@ class AlertsListWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        self.alertsWidgetList = {}
+
         self.setLayout(QVBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
@@ -33,11 +35,17 @@ class AlertsListWidget(QWidget):
         print("[AlertsListWidget] appendAlert()")
         alertWidget = AlertWidget(alert)
         alertWidget.installEventFilter(self)
+        self.alertsWidgetList[alert] = alertWidget
         self.appendAlertWidget(alertWidget)
 
     def appendAlertWidget(self, alertWidget):
         print("[AlertsListWidget] appendAlertWidget()")
         self.scrollAreaLayout.addWidget(alertWidget)
+
+    def updateNbResultsSummary(self, alert, nbAddedResults, nbRemovedResults):
+        print("[AlertsListWidget] updateNbResultsSummary()")
+        if alert in self.alertsWidgetList:
+            self.alertsWidgetList[alert].updateResultsSummary(nbAddedResults, nbRemovedResults)
 
     def eventFilter(self, obj, event):
         if event.type() == QEvent.Enter:

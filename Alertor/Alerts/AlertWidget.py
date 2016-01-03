@@ -1,5 +1,5 @@
 ﻿
-from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, QListView
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSizePolicy, QListView, QHBoxLayout
 from PyQt5.QtCore import Qt, QStringListModel
 from PyQt5.QtGui import QColor
 
@@ -12,14 +12,14 @@ class AlertWidget(QWidget):
     def __init__(self, alert, parent=None):
         super().__init__(parent)
 
-        self.mainLayout = QGridLayout()
+        self.mainLayout = QVBoxLayout()
         self.setLayout(self.mainLayout)
 
         self.alert = alert
 
         self.keywordsLabel = QLabel(self.alert.keywords)
 
-        self.mainLayout.addWidget(self.keywordsLabel, 0, 0, 1, 1)
+        self.mainLayout.addWidget(self.keywordsLabel)
 
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
 
@@ -30,14 +30,27 @@ class AlertWidget(QWidget):
         self.categoriesModel.flags = lambda index: Qt.ItemIsEnabled | Qt.ItemNeverHasChildren
 
         self.categoriesView.setMaximumSize(self.MAX_WIDTH, 55)
-        self.mainLayout.addWidget(self.categoriesView, 1, 0, 1, 1)
+        self.mainLayout.addWidget(self.categoriesView)
         self.setMaximumWidth(self.MAX_WIDTH)
 
-        self.mainLayout.addWidget(QLabel("In store {}".format(self.alert.location)), 2, 0, 1, 1)
-        self.mainLayout.addWidget(QLabel("Sort by {}".format(self.alert.sortOrder)), 3, 0, 1, 1)
+        resultSummaryLayout = QHBoxLayout()
+        # TODO: add colors, style, ...
+        self.addedResultsWidget = QLabel()
+        self.removedResultsWidget = QLabel()
+        self.updateResultsSummary("N/A", "N/A")
+        resultSummaryLayout.addWidget(self.addedResultsWidget)
+        resultSummaryLayout.addWidget(self.removedResultsWidget)
+        self.mainLayout.addLayout(resultSummaryLayout)
+
+        self.mainLayout.addWidget(QLabel("In store {}".format(self.alert.location)))
+        self.mainLayout.addWidget(QLabel("Sort by {}".format(self.alert.sortOrder)))
 
         self.setAutoFillBackground(True)
         self.setStyleSheetLeave()
+
+    def updateResultsSummary(self, nbAddedResults, nbRemovedResults):
+        self.addedResultsWidget.setText("Added: " + str(nbAddedResults))
+        self.removedResultsWidget.setText("Removed: " + str(nbRemovedResults))
 
     def setStyleSheetEnter(self):
         p = self.palette()
