@@ -8,5 +8,3 @@ See TreeModel.py, function setData() of TreeeModel.
 - When closing, shutdown all the treadpools.
 
 - Add documentation of methods.
-
-- Create style for results comparison in AlertWidget to highlight them.

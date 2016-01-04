@@ -18,6 +18,11 @@ class AlertWidget(QWidget):
         self.alert = alert
 
         self.keywordsLabel = QLabel(self.alert.keywords)
+        keywordFont = self.keywordsLabel.font()
+        keywordFont.setPointSize(keywordFont.pointSize() + 2)
+        keywordFont.setBold(True)
+        self.keywordsLabel.setFont(keywordFont)
+        self.keywordsLabel.setAlignment(Qt.AlignCenter)
 
         self.mainLayout.addWidget(self.keywordsLabel)
 
@@ -34,10 +39,11 @@ class AlertWidget(QWidget):
         self.setMaximumWidth(self.MAX_WIDTH)
 
         resultSummaryLayout = QHBoxLayout()
-        # TODO: add colors, style, ...
         self.addedResultsWidget = QLabel()
         self.removedResultsWidget = QLabel()
-        self.updateResultsSummary("N/A", "N/A")
+        self.updateResultsSummary("0", "0")
+        self.addedResultsWidget.setAlignment(Qt.AlignCenter)
+        self.removedResultsWidget.setAlignment(Qt.AlignCenter)
         resultSummaryLayout.addWidget(self.addedResultsWidget)
         resultSummaryLayout.addWidget(self.removedResultsWidget)
         self.mainLayout.addLayout(resultSummaryLayout)
@@ -51,6 +57,18 @@ class AlertWidget(QWidget):
     def updateResultsSummary(self, nbAddedResults, nbRemovedResults):
         self.addedResultsWidget.setText("Added: " + str(nbAddedResults))
         self.removedResultsWidget.setText("Removed: " + str(nbRemovedResults))
+
+        def __createStylesheet(color):
+            return """
+            border: 2px solid {color};
+            border-radius: 10px;
+            background-color: {color};
+            padding: 2px;""".format(color=color)
+
+        colorAddedResult = __createStylesheet("green" if str(nbAddedResults) != "0" else "grey")
+        colorRemovedResult = __createStylesheet("red" if str(nbRemovedResults) != "0" else "grey")
+        self.addedResultsWidget.setStyleSheet(colorAddedResult)
+        self.removedResultsWidget.setStyleSheet(colorRemovedResult)
 
     def setStyleSheetEnter(self):
         p = self.palette()
