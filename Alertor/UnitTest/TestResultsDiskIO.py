@@ -52,6 +52,6 @@ class TestResultsDiskIO(unittest.TestCase):
         diskIO = ResultsDiskIO()
         filePath = diskIO.saveResultsToDisk(alert, results)
 
-        resultsDeserialized = diskIO.getResultsFromDisk(alert)
+        resultsDeserialized = diskIO.getCurrentResultsFromDisk(alert.uid)
         for resExpected, resActual in zip(results, resultsDeserialized):
             self.compareResults(resExpected, resActual)
