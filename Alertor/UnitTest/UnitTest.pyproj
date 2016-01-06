@@ -24,6 +24,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="TestResultsComparator.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="__all_tests.py" />
     <Compile Include="TestEbayShippingFeesExecutor.py" />
     <Compile Include="TestEbayFindItemsExecutor.py">

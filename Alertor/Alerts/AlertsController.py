@@ -12,6 +12,7 @@ from Results.ResultsDiskIO import ResultsDiskIO
 
 from Alerts.Alert import Alert
 from Results.Result import Result
+from Results.ResultsComparator import ResultsComparator
 
 class AlertsController(QObject):
 
@@ -60,33 +61,15 @@ class AlertsController(QObject):
         print("Gonna compare current results with {}".format(previousResultFilepath))
         if previousResultFilepath:
             currentResultFilepath = ResultsDiskIO().cacheDirectory
-            (nbAddedResults, nbRemovedResults) = self.compareResults(previousResultFilepath, currentResultFilepath, executor.alert.uid)
+            alertUID = executor.alert.uid
+            previousResults = ResultsDiskIO().getResultsFromDisk(previousResultFilepath, alertUID)
+            currentResults = ResultsDiskIO().getCurrentResultsFromDisk(alertUID)
+            (nbAddedResults, nbRemovedResults) = ResultsComparator().getNbDifferences(previousResults, currentResults)
             self.__resultsComparisonDone.emit(executor.alert, nbAddedResults, nbRemovedResults)
 
     def alertClicked(self, alertWidget, alert):
         print("[AlertsController] alertClicked()")
         self.alertRequested.emit(alert)
-
-    def compareResults(self, previousResultFilepath, currentResultFilepath, alertUID):
-        """
-
-        Return:
-          tuple of (number of newly added results, number of removed results)
-        """
-        print("[AlertsController] compareResults()")        
-        previousResults = ResultsDiskIO().getResultsFromDisk(previousResultFilepath, alertUID)
-        currentResults = ResultsDiskIO().getCurrentResultsFromDisk(alertUID)
-
-        if not previousResults:
-            return (len(currentResults), 0)
-        previousSet = set([result.itemID for result in previousResults])
-        currentSet = set([result.itemID for result in currentResults])
-        removedResults = previousSet - currentSet
-        addedResults = currentSet - previousSet
-
-        print("There is {} removed items".format(len(removedResults)))
-        print("There is {} added items".format(len(addedResults)))
-        return (len(addedResults), len(removedResults))                
 
     def updateNbResultsSummary(self, alert, nbAddedResults, nbRemovedResults):
         print("[AlertsController] updateNbResultsSummary()")        

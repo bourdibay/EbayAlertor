@@ -16,7 +16,8 @@ if __name__ == '__main__':
     suite = unittest.TestSuite()
     for tests in ["TestEbayCategoriesList", "TestNewEbayAlertDialog",
                   "TestImageDownloadExecutor", "TestResultsDiskIO",
-                  "TestEbayFindItemsExecutor", "TestEbayShippingFeesExecutor"]:
+                  "TestEbayFindItemsExecutor", "TestEbayShippingFeesExecutor",
+                  "TestResultsComparator"]:
         suite.addTest(unittest.defaultTestLoader.loadTestsFromName(tests))
 
     res = unittest.TextTestRunner().run(suite)

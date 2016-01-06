@@ -78,6 +78,9 @@
     <Compile Include="Results\Result.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Results\ResultsComparator.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Results\ResultsController.py">
       <SubType>Code</SubType>
     </Compile>
