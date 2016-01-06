@@ -9,6 +9,7 @@ from Results.ResultsDiskIO import ResultsDiskIO
 
 from Alerts.Alert import Alert
 from Results.Result import Result
+from Results.ResultsComparator import ResultsComparator
 
 class AlertsResultsWidget(QWidget):
 
@@ -30,8 +31,15 @@ class AlertsResultsWidget(QWidget):
 
     def alertRequested(self, alert):
         print("[AlertsResultsController] alertRequested()")
-        results = ResultsDiskIO().getCurrentResultsFromDisk(alert.uid)
-        self.resultsController.loadResults(results)
+        currentResults = ResultsDiskIO().getCurrentResultsFromDisk(alert.uid)
+        # Compare with previous results, in order to flag the newly added results.
+        previousResultFilepath = ResultsDiskIO().getPreviousResultFilepath()
+        if previousResultFilepath:
+            previousResults = ResultsDiskIO().getResultsFromDisk(previousResultFilepath, alert.uid)
+            (addedResults, removedResults) = ResultsComparator().extractDifferentResults(previousResults, currentResults)
+            for result in addedResults:
+                result.isNewResult = True
+        self.resultsController.loadResults(currentResults)
 
     def appendNewAlert(self, alert):
         print("[AlertsResultsController] appendNewAlert()")

@@ -34,6 +34,7 @@ class ResultsListWidget(QWidget):
         self.resultWidgets.clear()
         for i in reversed(range(layout.count())): 
             layout.itemAt(i).widget().deleteLater()
+        self.scrollArea.verticalScrollBar().setValue(0);
 
     def refreshResultThumbnail(self, result):
         widget = self.resultWidgets.get(result, None)
@@ -58,5 +59,3 @@ class ResultsListWidget(QWidget):
             resultWidget = ResultWidget(result)
             self.resultWidgets[result] = resultWidget
             self.scrollAreaLayout.addWidget(resultWidget)
-
-#        resultWidget.installEventFilter(self)

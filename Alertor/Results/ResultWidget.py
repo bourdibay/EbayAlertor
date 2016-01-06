@@ -13,9 +13,12 @@ class ResultWidget(QWidget):
         self.setLayout(self.mainLayout)
         self.mainLayout.setContentsMargins(0, 0, 0, 0)
 
-        self.setBackgroundColor(QColor("#EBFCAE"))
-
         self.result = result
+
+        if self.result.isNewResult:
+            self.setBackgroundColor(QColor("#40FF70"))
+        else:
+            self.setBackgroundColor(QColor("#EBFCAE"))
 
         self.title = QLabel("""<a href='{}'>{}</a>""".format(self.result.itemURL,
                                                              self.result.title))

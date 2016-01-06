@@ -26,6 +26,11 @@ class TestResultsComparator(unittest.TestCase):
                    ]
         return results
 
+    def compareListResults(self, list1, list2):
+        self.assertEqual(len(list1), len(list2))
+        for (e1, e2) in zip(list1, list2):
+            self.assertEqual(e1.itemID, e2.itemID)
+
     def test_compareDifferences_SimilarResults(self):
         previousResults = self.buildResultsList(10)
         currentResults = self.buildResultsList(10)
@@ -75,3 +80,29 @@ class TestResultsComparator(unittest.TestCase):
 
         self.assertEqual(nbAdded, 3)
         self.assertEqual(nbRemoved, 4)
+
+    def test_extractDifferences_RemovedAndAddedResults(self):
+        previousResults = self.buildResultsList(10)
+        currentResults = self.buildResultsList(10)
+        # 4 added, thus in current results we have 4 less results
+        previousResultsAdditional = self.buildResultsList(4, 10)
+        previousResults += previousResultsAdditional
+        # and 3 removed
+        del previousResults[8]
+        del previousResults[4]
+        del previousResults[1]
+
+        (addedResults, removedResults) = ResultsComparator().extractDifferentResults(previousResults, currentResults)
+
+        self.compareListResults(addedResults, [currentResults[1],
+                                               currentResults[4], currentResults[8]])
+        self.compareListResults(removedResults, previousResultsAdditional)
+
+    def test_extractDifferences_SimilarResults(self):
+        previousResults = self.buildResultsList(10)
+        currentResults = self.buildResultsList(10)
+
+        (addedResults, removedResults) = ResultsComparator().extractDifferentResults(previousResults, currentResults)
+
+        self.compareListResults(addedResults, [])
+        self.compareListResults(removedResults, [])

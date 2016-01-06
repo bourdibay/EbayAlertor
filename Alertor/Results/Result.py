@@ -39,6 +39,7 @@ class Result(object):
 
         self.imageInCache = None
         self.shippingCost = Price("N/A", "N/A")
+        self.isNewResult = False
 
     @staticmethod
     def createFromSerialized(info):
