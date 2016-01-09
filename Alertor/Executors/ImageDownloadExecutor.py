@@ -6,6 +6,8 @@ from Executors.Executor import Executor
 from CacheDiskIO import CacheDiskIO
 
 class ImageDownloadExecutor(Executor):
+    """Download the image URL specified and store it in CacheDiskIO.cacheDirectory.
+    """
 
     def __init__(self, imgURL):
         self.url = imgURL

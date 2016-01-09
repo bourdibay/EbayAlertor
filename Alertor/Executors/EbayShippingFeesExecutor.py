@@ -5,6 +5,8 @@ import ebaysdk.shopping
 from Executors.Executor import Executor
 
 class EbayShippingFeesExecutor(Executor):
+    """Request the shipping fees of an item (= Result).
+    """
 
     apiConnection = ebaysdk.shopping.Connection(config_file="ebay.yaml", timeout=60)
 

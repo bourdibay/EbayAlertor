@@ -5,6 +5,8 @@ import ebaysdk.finding
 from Executors.Executor import Executor
 
 class EbayFindItemsExecutor(Executor):
+    """Request all the items matching the search filters specified in Alert.
+    """
 
     apiConnection = ebaysdk.finding.Connection(config_file="ebay.yaml", timeout=60)
 

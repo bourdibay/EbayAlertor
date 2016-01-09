@@ -12,7 +12,7 @@ class AlertsListWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.alertsWidgetList = {}
+        self.alertsWidgetList = {} # Alert - AlertWidget
 
         self.setLayout(QVBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
@@ -35,6 +35,7 @@ class AlertsListWidget(QWidget):
         print("[AlertsListWidget] appendAlert()")
         alertWidget = AlertWidget(alert)
         alertWidget.installEventFilter(self)
+        alertWidget.setDisabled(True)
         self.alertsWidgetList[alert] = alertWidget
         self.appendAlertWidget(alertWidget)
 
@@ -47,6 +48,10 @@ class AlertsListWidget(QWidget):
         if alert in self.alertsWidgetList:
             self.alertsWidgetList[alert].updateResultsSummary(nbAddedResults, nbRemovedResults)
 
+    def activateAlertWidget(self, alert):
+        if alert in self.alertsWidgetList:
+            self.alertsWidgetList[alert].setDisabled(False)
+
     def eventFilter(self, obj, event):
         if event.type() == QEvent.Enter:
             if isinstance(obj, AlertWidget):
@@ -55,7 +60,7 @@ class AlertsListWidget(QWidget):
             if isinstance(obj, AlertWidget):
                 obj.setStyleSheetLeave()
         elif event.type() == QEvent.MouseButtonRelease:
-            if isinstance(obj, AlertWidget):
+            if isinstance(obj, AlertWidget) and obj.isEnabled():
                 obj.setStyleSheetEnter()
                 obj.clickOnWidget()
 

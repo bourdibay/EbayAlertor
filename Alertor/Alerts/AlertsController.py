@@ -41,12 +41,9 @@ class AlertsController(QObject):
 
     def alertAppended(self, alert):
         print("[AlertsController] alertAppended()")
-
         self.alertsListWidget.appendAlert(alert)
-
         # TODO: factory executor
         executor = EbayFindItemsExecutor(alert)
-        
         self.alertExecutorsPool.addExecutor(executor)
 
     def cacheResult_callback(self, executor):
@@ -66,6 +63,7 @@ class AlertsController(QObject):
             currentResults = ResultsDiskIO().getCurrentResultsFromDisk(alertUID)
             (nbAddedResults, nbRemovedResults) = ResultsComparator().getNbDifferences(previousResults, currentResults)
             self.__resultsComparisonDone.emit(executor.alert, nbAddedResults, nbRemovedResults)
+        self.alertsListWidget.activateAlertWidget(executor.alert)
 
     def alertClicked(self, alertWidget, alert):
         print("[AlertsController] alertClicked()")
