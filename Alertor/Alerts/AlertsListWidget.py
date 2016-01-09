@@ -1,5 +1,5 @@
 ﻿
-from PyQt5.QtWidgets import QWidget, QGridLayout, QScrollArea, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QGridLayout, QScrollArea, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import Qt, QEvent, pyqtSignal
 
 from Alerts.Alert import Alert
@@ -8,6 +8,7 @@ from Alerts.AlertWidget import AlertWidget
 class AlertsListWidget(QWidget):
 
     alertClicked = pyqtSignal(AlertWidget, Alert)
+    alertDeleted = pyqtSignal(Alert)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -34,8 +35,9 @@ class AlertsListWidget(QWidget):
     def appendAlert(self, alert):
         print("[AlertsListWidget] appendAlert()")
         alertWidget = AlertWidget(alert)
-        alertWidget.installEventFilter(self)
         alertWidget.setDisabled(True)
+        alertWidget.clicked.connect(lambda: self.alertClicked.emit(alertWidget, alertWidget.alert))
+        alertWidget.closed.connect(lambda: self.alertWidgetClose(alertWidget))
         self.alertsWidgetList[alert] = alertWidget
         self.appendAlertWidget(alertWidget)
 
@@ -52,21 +54,14 @@ class AlertsListWidget(QWidget):
         if alert in self.alertsWidgetList:
             self.alertsWidgetList[alert].setDisabled(False)
 
-    def eventFilter(self, obj, event):
-        if event.type() == QEvent.Enter:
-            if isinstance(obj, AlertWidget):
-                obj.setStyleSheetEnter()
-        elif event.type() == QEvent.Leave:
-            if isinstance(obj, AlertWidget):
-                obj.setStyleSheetLeave()
-        elif event.type() == QEvent.MouseButtonRelease:
-            if isinstance(obj, AlertWidget) and obj.isEnabled():
-                obj.setStyleSheetEnter()
-                obj.clickOnWidget()
-
-                self.alertClicked.emit(obj, obj.alert)
-
-        elif event.type() == QEvent.MouseButtonPress:
-            if isinstance(obj, AlertWidget):
-                obj.setStyleSheetMousePress()
-        return super().eventFilter(obj, event)
+    def alertWidgetClose(self, alertWidget):
+        print("[AlertsListWidget] alertWidgetClose()")
+        alert = alertWidget.alert
+        reply = QMessageBox.question(self, "Confirmation",
+                                     "Are you sure to delete alert \"{}\" ?".format(alert.keywords),
+                                     QMessageBox.Yes | QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.scrollAreaLayout.removeWidget(alertWidget)
+            alertWidget.deleteLater()
+            del self.alertsWidgetList[alert]
+            self.alertDeleted.emit(alert)

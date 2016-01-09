@@ -7,7 +7,6 @@ from Alerts.AlertsListWidget import AlertsListWidget
 from Executors.ExecutorsPool import ExecutorsPool
 from Executors.EbayFindItemsExecutor import EbayFindItemsExecutor
 
-from Alerts.AlertsDiskIO import AlertsDiskIO
 from Results.ResultsDiskIO import ResultsDiskIO
 
 from Alerts.Alert import Alert
@@ -25,13 +24,14 @@ class AlertsController(QObject):
         self.alertExecutorsPool = ExecutorsPool(name="AlertExecutorsPool",
                                                 callbackDone=self.cacheResult_callback)
         self.alertExecutorsPool.executorFinished.connect(self.executorFinished)
-        self.__resultsComparisonDone.connect(self.updateNbResultsSummary)
+        self.__resultsComparisonDone.connect(self.__updateNbResultsSummary_slot)
 
         self.alertsListModel = AlertsListModel()
         self.alertsListWidget = AlertsListWidget()
 
         self.alertsListModel.alertAppended.connect(self.alertAppended)
-        self.alertsListWidget.alertClicked.connect(self.alertClicked)
+        self.alertsListWidget.alertClicked.connect(self.__alertClicked_slot)
+        self.alertsListWidget.alertDeleted.connect(self.__deleteAlert_slot)
 
         self.alertsListModel.loadSavedAlerts()
 
@@ -45,6 +45,10 @@ class AlertsController(QObject):
         # TODO: factory executor
         executor = EbayFindItemsExecutor(alert)
         self.alertExecutorsPool.addExecutor(executor)
+
+    def __deleteAlert_slot(self, alert):
+        print("[AlertsController] __deleteAlert_slot()")
+        self.alertsListModel.deleteAlert(alert)
 
     def cacheResult_callback(self, executor):
         print("[AlertsController] cacheResult_callback()")
@@ -65,10 +69,10 @@ class AlertsController(QObject):
             self.__resultsComparisonDone.emit(executor.alert, nbAddedResults, nbRemovedResults)
         self.alertsListWidget.activateAlertWidget(executor.alert)
 
-    def alertClicked(self, alertWidget, alert):
-        print("[AlertsController] alertClicked()")
+    def __alertClicked_slot(self, alertWidget, alert):
+        print("[AlertsController] __alertClicked_slot()")
         self.alertRequested.emit(alert)
 
-    def updateNbResultsSummary(self, alert, nbAddedResults, nbRemovedResults):
-        print("[AlertsController] updateNbResultsSummary()")        
+    def __updateNbResultsSummary_slot(self, alert, nbAddedResults, nbRemovedResults):
+        print("[AlertsController] __updateNbResultsSummary_slot()")        
         self.alertsListWidget.updateNbResultsSummary(alert, nbAddedResults, nbRemovedResults)

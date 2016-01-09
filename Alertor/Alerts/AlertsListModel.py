@@ -26,3 +26,12 @@ class AlertsListModel(QObject):
         if save:
             AlertsDiskIO().saveAlertToDisk(alert)
         self.alertAppended.emit(alert)
+
+    def deleteAlert(self, alert):
+        try :
+            idx = self.alerts.index(alert)
+            # TODO: delete from AlertDiskIO
+            del self.alerts[idx]
+        except ValueError:
+            pass
+

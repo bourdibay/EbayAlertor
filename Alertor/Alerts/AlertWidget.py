@@ -1,6 +1,6 @@
 ﻿
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSizePolicy, QListView, QHBoxLayout
-from PyQt5.QtCore import Qt, QStringListModel
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSizePolicy, QListView, QHBoxLayout, QToolButton
+from PyQt5.QtCore import Qt, QStringListModel, QEvent, pyqtSignal
 from PyQt5.QtGui import QColor
 
 from Alerts.Alert import Alert
@@ -8,6 +8,9 @@ from Alerts.Alert import Alert
 class AlertWidget(QWidget):
 
     MAX_WIDTH = 350
+
+    clicked = pyqtSignal()
+    closed = pyqtSignal()
 
     def __init__(self, alert, parent=None):
         super().__init__(parent)
@@ -17,6 +20,7 @@ class AlertWidget(QWidget):
 
         self.alert = alert
 
+        self.topLayout = QHBoxLayout() # contains close button + title
         self.keywordsLabel = QLabel(self.alert.keywords)
         keywordFont = self.keywordsLabel.font()
         keywordFont.setPointSize(keywordFont.pointSize() + 2)
@@ -24,7 +28,32 @@ class AlertWidget(QWidget):
         self.keywordsLabel.setFont(keywordFont)
         self.keywordsLabel.setAlignment(Qt.AlignCenter)
 
-        self.mainLayout.addWidget(self.keywordsLabel)
+        self.topLayout.addWidget(self.keywordsLabel)
+        closeButton = QToolButton()
+        closeButton.setText("X")
+        closeButton.setStyleSheet("""
+        QToolButton {
+        color: black;
+        font: bold;
+        background-color: #FF3333;
+        border: 2px solid #FF3333;
+        border-radius: 9px;
+        }
+        QToolButton:hover {
+        background-color: #FF0000;
+        border: 2px solid #FF0000;
+        }
+        QToolButton:disabled {
+        background-color: #FF8A8A;
+        border: 2px solid #FF8A8A;
+        }
+        """)
+        closeButton.clicked.connect(lambda: self.closed.emit())
+
+        self.topLayout.addWidget(closeButton)
+        self.topLayout.setContentsMargins(0, 0, 0, 0)
+
+        self.mainLayout.addLayout(self.topLayout)
 
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
 
@@ -53,6 +82,8 @@ class AlertWidget(QWidget):
 
         self.setAutoFillBackground(True)
         self.setStyleSheetLeave()
+
+        self.installEventFilter(self)
 
     def updateResultsSummary(self, nbAddedResults, nbRemovedResults):
         self.addedResultsWidget.setText("Added: " + str(nbAddedResults))
@@ -85,6 +116,18 @@ class AlertWidget(QWidget):
         p.setColor(self.backgroundRole(), QColor("#C0ECFA"))
         self.setPalette(p)
 
-    def clickOnWidget(self):
-        print("Click detected, should perform request to ebay")
-        pass
+    def eventFilter(self, obj, event):
+        if not isinstance(obj, AlertWidget):
+            return super().eventFilter(obj, event)
+
+        if event.type() == QEvent.Enter:
+            obj.setStyleSheetEnter()
+        elif event.type() == QEvent.Leave:
+            obj.setStyleSheetLeave()
+        elif event.type() == QEvent.MouseButtonRelease:
+            if obj.isEnabled():
+                obj.setStyleSheetEnter()
+                self.clicked.emit()
+        elif event.type() == QEvent.MouseButtonPress:
+            obj.setStyleSheetMousePress()
+        return super().eventFilter(obj, event)
