@@ -31,7 +31,7 @@ class ResultsComparator(object):
         """
         print("[ResultsComparator] extractDifferentResults()")        
         if not previousResults:
-            return (len(currentResults), 0)
+            return ([], [])
         previousSet = set([result.itemID for result in previousResults])
         currentSet = set([result.itemID for result in currentResults])
         removedSet = previousSet - currentSet
