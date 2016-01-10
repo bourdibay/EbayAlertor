@@ -17,18 +17,18 @@ class ResultsController(QObject):
 
         self.resultsListWidget.setCurrentResults(self.resultsListModel.resultsSorted)
 
-        self.resultsListModel.currentResultsChanged.connect(self.__currentResultsChangedSlot)
-        self.resultsListModel.resultImageDownloaded.connect(self.__resultImageDownloaded)
-        self.resultsListModel.resultShippingCostUpdated.connect(self.__resultShippingCostUpdated)
+        self.resultsListModel.currentResultsChanged.connect(self.__currentResultsChanged_slot)
+        self.resultsListModel.resultImageDownloaded.connect(self.__resultImageDownloaded_slot)
+        self.resultsListModel.resultShippingCostUpdated.connect(self.__resultShippingCostUpdated_slot)
 
     def loadResults(self, results):
         self.resultsListModel.addCurrentResults(results)
 
-    def __currentResultsChangedSlot(self):
+    def __currentResultsChanged_slot(self):
         self.resultsListWidget.setCurrentResults(self.resultsListModel.resultsSorted)
 
-    def __resultImageDownloaded(self, result):
+    def __resultImageDownloaded_slot(self, result):
         self.resultsListWidget.refreshResultThumbnail(result)
 
-    def __resultShippingCostUpdated(self, result):
+    def __resultShippingCostUpdated_slot(self, result):
         self.resultsListWidget.refreshShippingCost(result)

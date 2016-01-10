@@ -21,8 +21,6 @@ class ExecutorsPool(QObject):
         self.executors = {}
         self.lock = Lock()
 
-        #self.printLock = Lock()
-
         self.callbackDone = callbackDone
 
     def shutdown(self):
@@ -39,10 +37,6 @@ class ExecutorsPool(QObject):
         futureResult.add_done_callback(self.callback_done)
 
     def callback_done(self, futureResult):
-        #self.printLock.acquire()
-        #print("[{}] CallbackDone with: {}".format(self.name, futureResult))
-        #self.printLock.release()
-
         self.lock.acquire()
         executor = self.executors[futureResult]
         del self.executors[futureResult]
@@ -50,9 +44,5 @@ class ExecutorsPool(QObject):
 
         if self.callbackDone:
             self.callbackDone(executor)
-
-        #self.printLock.acquire()
-        #print("[{}] Executor finished: {}".format(self.name, futureResult))
-        #self.printLock.release()
 
         self.executorFinished.emit(executor)

@@ -33,7 +33,6 @@ class AlertsListWidget(QWidget):
         self.setMaximumWidth(AlertWidget.MAX_WIDTH + 10)
 
     def appendAlert(self, alert):
-        print("[AlertsListWidget] appendAlert()")
         alertWidget = AlertWidget(alert)
         alertWidget.setDisabled(True)
         alertWidget.clicked.connect(lambda: self.alertClicked.emit(alertWidget, alertWidget.alert))
@@ -42,12 +41,10 @@ class AlertsListWidget(QWidget):
         self.appendAlertWidget(alertWidget)
 
     def appendAlertWidget(self, alertWidget):
-        print("[AlertsListWidget] appendAlertWidget()")
         self.scrollAreaLayout.addWidget(alertWidget)
 
     def updateNbResultsSummary(self, alert, nbAddedResults, nbRemovedResults):
-        print("[AlertsListWidget] updateNbResultsSummary()")
-        if alert in self.alertsWidgetList:
+         if alert in self.alertsWidgetList:
             self.alertsWidgetList[alert].updateResultsSummary(nbAddedResults, nbRemovedResults)
 
     def activateAlertWidget(self, alert):
@@ -55,7 +52,6 @@ class AlertsListWidget(QWidget):
             self.alertsWidgetList[alert].setDisabled(False)
 
     def alertWidgetClose(self, alertWidget):
-        print("[AlertsListWidget] alertWidgetClose()")
         alert = alertWidget.alert
         reply = QMessageBox.question(self, "Confirmation",
                                      "Are you sure to delete alert \"{}\" ?".format(alert.keywords),

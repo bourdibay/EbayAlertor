@@ -25,7 +25,6 @@ class ResultsListModel(QObject):
         self.shippingFeesPool = None
 
     def addCurrentResults(self, results):
-        print("[ResultsListModel] addCurrentResults()")
         if self.imageDownloaderPool:
             self.imageDownloaderPool.shutdown()
         if self.shippingFeesPool:

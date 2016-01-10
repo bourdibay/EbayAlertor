@@ -53,7 +53,6 @@ class ResultsListWidget(QWidget):
         self.scrollAreaWidget.setPalette(p)
 
     def setCurrentResults(self, results):
-        print("[ResultsListWidget]: setCurrentResults()")
         self.__clearLayout(self.scrollAreaLayout)
         for result in results:
             resultWidget = ResultWidget(result)

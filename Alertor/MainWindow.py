@@ -30,20 +30,18 @@ class MainWindow(QMainWindow):
 
         self.setupMenus()
 
-        self.addNewAlertDialog.alertCreated.connect(self.newAlertCreated)
+        self.addNewAlertDialog.alertCreated.connect(self.__newAlertCreated_slot)
 
     def setupMenus(self):
         self.menuBar().setNativeMenuBar(True)
         menu_alert = self.menuBar().addMenu("Alerts")
         action_addNewAlert = menu_alert.addAction("Add new alert")
-        action_addNewAlert.triggered.connect(self.addNewAlert)
+        action_addNewAlert.triggered.connect(self.__addNewAlert_slot)
 
-    def addNewAlert(self):
-        print("[MainWindow] addNewAlert()")
+    def __addNewAlert_slot(self):
         self.addNewAlertDialog.show()
         self.addNewAlertDialog.activateWindow()
 
-    def newAlertCreated(self, alert):
-        print("[MainWindow] newAlertCreated()")
+    def __newAlertCreated_slot(self, alert):
         self.alertsResultsWidget.appendNewAlert(alert)
 

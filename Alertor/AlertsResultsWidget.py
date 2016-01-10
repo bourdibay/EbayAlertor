@@ -22,15 +22,14 @@ class AlertsResultsWidget(QWidget):
         self.alertsController = AlertsController()
         self.resultsController = ResultsController()
 
-        self.alertsController.alertRequested.connect(self.alertRequested)
+        self.alertsController.alertRequested.connect(self.__alertRequested_slot)
 
         self.splitter = QSplitter()
         self.layout().addWidget(self.splitter)
         self.splitter.addWidget(self.alertsController.alertsListWidget)
         self.splitter.addWidget(self.resultsController.resultsListWidget)
 
-    def alertRequested(self, alert):
-        print("[AlertsResultsController] alertRequested()")
+    def __alertRequested_slot(self, alert):
         currentResults = ResultsDiskIO().getCurrentResultsFromDisk(alert.uid)
         # Compare with previous results, in order to flag the newly added results.
         previousResultFilepath = ResultsDiskIO().getPreviousResultFilepath()
@@ -42,5 +41,4 @@ class AlertsResultsWidget(QWidget):
         self.resultsController.loadResults(currentResults)
 
     def appendNewAlert(self, alert):
-        print("[AlertsResultsController] appendNewAlert()")
         self.alertsController.appendNewAlert(alert)
