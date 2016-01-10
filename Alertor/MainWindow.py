@@ -45,3 +45,8 @@ class MainWindow(QMainWindow):
     def __newAlertCreated_slot(self, alert):
         self.alertsResultsWidget.appendNewAlert(alert)
 
+    def closeEvent(self, event):
+        print("Closing, shuting down all requests in progress...")
+        self.alertsResultsWidget.shutdownAllRequests()
+        event.accept()
+

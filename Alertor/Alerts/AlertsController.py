@@ -38,6 +38,9 @@ class AlertsController(QObject):
     def appendNewAlert(self, alert):
         self.alertsListModel.appendAlert(alert)
 
+    def shutdownAllRequests(self):
+        self.alertExecutorsPool.shutdown()
+
     def __alertAppended_slot(self, alert):
         self.alertsListWidget.appendAlert(alert)
         # TODO: factory executor

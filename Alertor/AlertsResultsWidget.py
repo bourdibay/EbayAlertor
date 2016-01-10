@@ -42,3 +42,7 @@ class AlertsResultsWidget(QWidget):
 
     def appendNewAlert(self, alert):
         self.alertsController.appendNewAlert(alert)
+
+    def shutdownAllRequests(self):
+        self.resultsController.shutdownAllRequests()
+        self.alertsController.shutdownAllRequests()

@@ -25,10 +25,7 @@ class ResultsListModel(QObject):
         self.shippingFeesPool = None
 
     def addCurrentResults(self, results):
-        if self.imageDownloaderPool:
-            self.imageDownloaderPool.shutdown()
-        if self.shippingFeesPool:
-            self.shippingFeesPool.shutdown()
+        self.shutdownAllRequests()
 
         self.resultsURL.clear()
         self.resultsID.clear()
@@ -48,6 +45,12 @@ class ResultsListModel(QObject):
             self.imageDownloaderPool.addExecutor(ImageDownloadExecutor(result.imgURL))
             self.shippingFeesPool.addExecutor(EbayShippingFeesExecutor(result.itemID, result.country))
         self.currentResultsChanged.emit()
+
+    def shutdownAllRequests(self):
+        if self.imageDownloaderPool:
+            self.imageDownloaderPool.shutdown()
+        if self.shippingFeesPool:
+            self.shippingFeesPool.shutdown()
 
     def imageDownloaded_callback(self, executor):
         print("[ResultsListModel] imageDownloaded_callback()")

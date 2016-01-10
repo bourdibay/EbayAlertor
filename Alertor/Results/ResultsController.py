@@ -24,6 +24,9 @@ class ResultsController(QObject):
     def loadResults(self, results):
         self.resultsListModel.addCurrentResults(results)
 
+    def shutdownAllRequests(self):
+        self.resultsListModel.shutdownAllRequests()
+
     def __currentResultsChanged_slot(self):
         self.resultsListWidget.setCurrentResults(self.resultsListModel.resultsSorted)
 

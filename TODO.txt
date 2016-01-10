@@ -1,9 +1,3 @@
 
-- Add delete Alert in DiskIO
-
 - The TreeModel does not always update children/parent checkstates (see in alerts creation's dialog).
 See TreeModel.py, function setData() of TreeeModel.
-
-- When closing, shutdown all the treadpools.
-
-- Add documentation of methods.
