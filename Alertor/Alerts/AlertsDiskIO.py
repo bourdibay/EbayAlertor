@@ -10,7 +10,10 @@ from AlertsParameters.Categories.Category import Category
 class AlertsDiskIO(object):
     def __init__(self):
         super().__init__()
-        self.alertsDirectory = "../Saves/"
+
+        home = os.path.expanduser("~")
+        self.alertsDirectory = os.path.join(home, "EbayAlertor")
+
         self.alertPrefix = "alert_"
         self.resultPrefix = "result_"
         if not os.path.exists(self.alertsDirectory):

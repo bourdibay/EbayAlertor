@@ -53,14 +53,12 @@ class ResultsListModel(QObject):
             self.shippingFeesPool.shutdown()
 
     def imageDownloaded_callback(self, executor):
-        print("[ResultsListModel] imageDownloaded_callback()")
         result = self.resultsURL.get(executor.url, None)
         if result and executor.result:
             result.imageInCache = executor.result
             self.resultImageDownloaded.emit(result)
 
     def shippingFeesGotten_callback(self, executor):
-        print("[ResultsListModel] shippingFeesGotten_callback()")
         result = self.resultsID.get(executor.itemID, None)
         if result and executor.result:
             (result.shippingCost.value, result.shippingCost.currency) = executor.result

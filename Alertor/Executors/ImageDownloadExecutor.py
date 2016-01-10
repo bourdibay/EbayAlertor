@@ -20,5 +20,5 @@ class ImageDownloadExecutor(Executor):
                 urllib.request.urlretrieve(self.url, self.result)
             except Exception as e:
                 print("[ImageDownloadExecutor] Exception while downloading image URL: {}".format(e))
-        else:
-            print("[ImageDownloadExecutor] Do not download {}".format(self.result))
+        #else:
+        #    print("[ImageDownloadExecutor] Do not download {}".format(self.result))

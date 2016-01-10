@@ -37,8 +37,9 @@ class NewEbayAlertDialog(QDialog):
 
         # Locations
         self.locationsComboBox = QComboBox()
+        sortedLocations = sorted(StandardLocationsList.locations.items())
         locationsDisplayed = ["{}_{}".format(country, code)
-                              for code, country in StandardLocationsList.locations.items()]
+                              for code, country in sortedLocations]
         self.locationsComboBox.addItems(locationsDisplayed)
         locationsLabel = QLabel("Items location:")
         locationsLayout = QHBoxLayout()
@@ -99,8 +100,7 @@ class NewEbayAlertDialog(QDialog):
         return getCheckedCategoriesHelper(self.categoriesTreeItems)
 
     def createAlert(self):
-        print("[NewEbayAlertDialog] createAlert()")
-        # TODO : limit category list to 3 !
+        # TODO : limit category list to 3 ! (it's a limitation of Ebay)
         checkedCategories = self.__getCheckedCategories()
         location = self.locationsComboBox.currentText().split('_')[-1]
         sortOrder = self.sortOrderComboBox.currentText()

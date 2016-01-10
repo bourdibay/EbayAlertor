@@ -15,7 +15,6 @@ class EbayFindItemsExecutor(Executor):
         self.alert = alert
 
     def execute(self):
-        print("[EbayFindItemsExecutor] execute()")
         categoryId = [str(category.ID) for category in self.alert.categories]
         requestArgs = {
             "keywords": self.alert.keywords,

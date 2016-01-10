@@ -13,7 +13,6 @@ class ResultsComparator(object):
         Return:
           tuple of (number of newly added results, number of removed results)
         """
-        print("[ResultsComparator] getNbDifferences()")
         (addedResults, removedResults) = self.extractDifferentResults(previousResults, currentResults)
         return (len(addedResults), len(removedResults))
 
@@ -28,8 +27,7 @@ class ResultsComparator(object):
 
         Return:
           tuple of (list of newly added results, list of removed results)
-        """
-        print("[ResultsComparator] extractDifferentResults()")        
+        """    
         if not previousResults:
             return ([], [])
         previousSet = set([result.itemID for result in previousResults])

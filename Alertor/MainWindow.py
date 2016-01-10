@@ -1,4 +1,6 @@
 ﻿
+import os
+
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout
 from PyQt5.QtWidgets import QMenuBar, QMenu, QAction
 
@@ -22,7 +24,11 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.mainWidget)
         self.mainLayout.setContentsMargins(0, 0, 0, 0)
 
-        self.ebayCategoriesList = EbayCategoriesList.fromCache("EbayCategories.dict")
+        thisFilePath = os.path.dirname(os.path.realpath(__file__))
+        ebayCategoriesCache = os.path.join(thisFilePath, "EbayCategories.dict")
+        self.ebayCategoriesList = EbayCategoriesList.fromCache(ebayCategoriesCache)
+
+
         self.addNewAlertDialog = NewEbayAlertDialog(self.ebayCategoriesList, self)
 
         self.alertsResultsWidget = AlertsResultsWidget()

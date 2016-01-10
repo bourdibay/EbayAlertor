@@ -21,7 +21,6 @@ class EbayShippingFeesExecutor(Executor):
         self.destinationCountry = destinationCountry
 
     def execute(self):
-        print("[EbayShippingFeesExecutor] execute()")
         requestArgs = {
             "ItemID": self.itemID,
             "DestinationCountryCode": self.destinationCountry

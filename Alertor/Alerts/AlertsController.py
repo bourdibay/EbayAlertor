@@ -55,7 +55,6 @@ class AlertsController(QObject):
             ResultsDiskIO().saveSerializedResultsToDisk(executor.alert, executor.result)
 
     def __executorFinished_slot(self, executor):
-        print("Execution finished for {}".format(executor.alert.keywords))
         previousResultFilepath = ResultsDiskIO().getPreviousResultFilepath()
         if previousResultFilepath:
             currentResultFilepath = ResultsDiskIO().cacheDirectory
