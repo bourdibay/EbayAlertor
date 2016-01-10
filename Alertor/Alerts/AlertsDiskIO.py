@@ -27,6 +27,11 @@ class AlertsDiskIO(object):
                         alerts.append(alert)
         return alerts
 
+    def deleteAlertInDisk(self, alert):
+        filename = os.path.join(self.alertsDirectory, self.alertPrefix + str(alert.uid))
+        if os.path.exists(filename) and os.path.isfile(filename):
+            os.remove(filename)
+
     def __tryCreateAlertFromFile(self, filename, fd):
         uid = uuid.UUID(filename[len(self.alertPrefix):])
         try:
