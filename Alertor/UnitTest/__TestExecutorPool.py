@@ -7,6 +7,7 @@ sys.path.append(os.path.join(os.path.split(__file__)[0], os.pardir))
 import unittest
 import time
 import random
+from threading import Lock
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -25,15 +26,22 @@ class TestExecutor(EbayFindItemsExecutor):
     def execute(self):
         r = random.randint(1, 10)
         time.sleep(r)
-        print("Start {}".format(r))
+        print("Start thread which slept {}".format(r))
         super().execute()
 
 class TestExecutorsPool(unittest.TestCase):
+
+    def __init__(self, app):
+        super().__init__()
+        self.app = app
 
     def test_executeSeveralRequests(self):
 
         executorsPool = ExecutorsPool()
         executorsPool.executorFinished.connect(self.taskExecuted)
+
+        self.lock = Lock()
+        self.nbExecutors = 5
 
         self.addExecutor(executorsPool)
         self.addExecutor(executorsPool)
@@ -46,7 +54,12 @@ class TestExecutorsPool(unittest.TestCase):
         executorsPool.addExecutor(executor)
 
     def taskExecuted(self, executor):
-        print("Result of executor = {}".format(executor))
+        with self.lock:
+            self.nbExecutors -= 1
+            print("Result of executor = {}, remain {} executors to finish".format(executor, self.nbExecutors))
+            if self.nbExecutors <= 0:
+                print("Success")
+                app.exit()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -54,7 +67,7 @@ if __name__ == '__main__':
     window = QMainWindow()
     window.show()
 
-    test = TestExecutorsPool()
+    test = TestExecutorsPool(app)
     test.test_executeSeveralRequests()
 
     sys.exit(app.exec_())
