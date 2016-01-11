@@ -15,20 +15,22 @@ class AlertsListWidget(QWidget):
 
         self.alertsWidgetList = {} # Alert - AlertWidget
 
-        self.setLayout(QVBoxLayout())
-        self.layout().setContentsMargins(0, 0, 0, 0)
+        self.mainLayout = QVBoxLayout()
+        self.setLayout(self.mainLayout)
+        self.mainLayout.setContentsMargins(0, 0, 0, 0)
 
         self.scrollArea = QScrollArea()
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidget = QWidget()
         self.scrollAreaLayout = QVBoxLayout()
+        self.scrollAreaLayout.setContentsMargins(5, 5, 5, 5)
         self.scrollAreaWidget.setLayout(self.scrollAreaLayout)
         self.scrollArea.setWidget(self.scrollAreaWidget)
 
         self.scrollArea.setAlignment(Qt.AlignTop)
         self.scrollAreaLayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
 
-        self.layout().addWidget(self.scrollArea)
+        self.mainLayout.addWidget(self.scrollArea)
 
         self.setMaximumWidth(AlertWidget.MAX_WIDTH + 10)
 
