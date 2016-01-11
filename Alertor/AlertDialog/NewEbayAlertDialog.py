@@ -17,6 +17,8 @@ class NewEbayAlertDialog(QDialog):
     def __init__(self, categoriesList, parent=None):
         super().__init__(parent)
 
+        self.setWindowTitle("Create alert")
+
         self.resize(800, 600)
         mainLayout = QGridLayout()
         self.setLayout(mainLayout)
