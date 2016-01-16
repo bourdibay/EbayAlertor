@@ -52,7 +52,7 @@ class MainWindow(QMainWindow):
         self.alertsResultsWidget.appendNewAlert(alert)
 
     def closeEvent(self, event):
-        print("Closing, shuting down all requests in progress...")
+        print("Closing, shutting down all requests in progress...")
         self.alertsResultsWidget.shutdownAllRequests()
         event.accept()
 
