@@ -10,15 +10,20 @@ class ImageDownloadExecutor(Executor):
     """
 
     def __init__(self, imgURL):
+        super().__init__()
         self.url = imgURL
-        self.filename = self.url.replace("/", "_").replace(":", "_")
+        if self.url:
+            self.filename = self.url.replace("/", "_").replace(":", "_")
+        else:
+            self.filename = ""
 
     def execute(self):
-        self.result = CacheDiskIO().createFullpath(self.filename)
-        if not os.path.exists(self.result):
-            try:
-                urllib.request.urlretrieve(self.url, self.result)
-            except Exception as e:
-                print("[ImageDownloadExecutor] Exception while downloading image URL: {}".format(e))
-        #else:
-        #    print("[ImageDownloadExecutor] Do not download {}".format(self.result))
+        if self.filename:
+            self.result = CacheDiskIO().createFullpath(self.filename)
+            if not os.path.exists(self.result):
+                try:
+                    urllib.request.urlretrieve(self.url, self.result)
+                except Exception as e:
+                    print("[ImageDownloadExecutor] Exception while downloading image URL: {}".format(e))
+            #else:
+            #    print("[ImageDownloadExecutor] Do not download {}".format(self.result))
