@@ -1,6 +1,5 @@
 @echo off
 
-rem To change to python3.5 as soon as PyQt5 support is released.
-set pythonPath=C:\Python34\python.exe
+set pythonPath="C:\Program Files\Python 3.5\python.exe"
 
 call %pythonPath% Alertor\Alertor.py
