@@ -6,11 +6,10 @@ Results and images are cached in your tmp directory (on WIndows: C:\Users\%usern
 
 # Installation
 
-1. Install [Python3.x](https://www.python.org/downloads/) (tested with python3.4 and python3.5)
-2. Install [PyQt5](https://riverbankcomputing.com/software/pyqt/download5) (tested with PyQt5.5 and PyQt5.6)
-3. Install [ebaysdk-python](https://github.com/timotheus/ebaysdk-python)
-4. Have a [Ebay developer account](https://go.developer.ebay.com/)
-5. Be sure to have the file *ebay.yaml* in your home as explained in the ebaysdk-python's [documentation](https://github.com/timotheus/ebaysdk-python/wiki/YAML-Configuration), with your API keys.
+1. Install [Python3.x](https://www.python.org/downloads/) (tested with python3.7)
+2. Have a [Ebay developer account](https://go.developer.ebay.com/)
+3. Be sure to have the file *ebay.yaml* in your home as explained in the ebaysdk-python's [documentation](https://github.com/timotheus/ebaysdk-python/wiki/YAML-Configuration), with your API keys.
+4. Install all the requirements (PyQt5, ebaysdk) specified in [requirements.txt](https://github.com/bourdibay/EbayAlertor/blob/master/requirements.txt)
 
 # Screenshots
 

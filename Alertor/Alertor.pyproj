@@ -12,8 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>Alertor</Name>
     <RootNamespace>Alertor</RootNamespace>
-    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
-    <InterpreterVersion>3.4</InterpreterVersion>
+    <InterpreterId>MSBuild|ebayaletertor|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,9 +100,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.4" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Executors\" />
     <Folder Include="Alerts\" />
     <Folder Include="AlertsParameters\Categories\" />
@@ -111,12 +107,26 @@
     <Folder Include="AlertDialog\" />
     <Folder Include="Results\" />
   </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="ebayaletertor\">
+      <Id>ebayaletertor</Id>
+      <Version>3.7</Version>
+      <Description>ebayaletertor (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
-  <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in
        the BeforeBuild and AfterBuild targets below. -->
@@ -125,4 +135,5 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
